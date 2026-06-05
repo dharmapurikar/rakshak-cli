@@ -1,0 +1,53 @@
+name: update-images
+
+on:
+  schedule:
+    # Every Monday 09:00 UTC = 14:30 IST
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+    inputs:
+      check_only:
+        description: "Check for updates without applying"
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths:
+      - "scripts/update.sh"
+      - "scripts/latest-versions.sh"
+      - "Makefile"
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITEA_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name  "rakshak-bot"
+          git config user.email "rakshak-bot@users.noreply.git.sable-chinstrap.ts.net"
+
+      - name: Login to Gitea Container Registry
+        run: |
+          echo "${{ secrets.GITEA_TOKEN }}" \
+            | docker login git.sable-chinstrap.ts.net \
+                -u "${{ secrets.GITEA_USER }}" \
+                --password-stdin
+
+      - name: Install jq
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq jq
+
+      - name: Check for updates
+        if: ${{ github.event.inputs.check_only == 'true' }}
+        run: ./scripts/update.sh --check
+
+      - name: Apply updates
+        if: ${{ github.event.inputs.check_only != 'true' }}
+        env:
+          GITEA_USER: ${{ secrets.GITEA_USER }}
+          GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
+        run: ./scripts/update.sh

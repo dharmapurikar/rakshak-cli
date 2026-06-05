@@ -1,6 +1,6 @@
 {
   "name": "@rakshak/cli",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Containerized security & quality scanners you can summon from any project. Each tool is a pinned image pushed to your self-hosted Gitea registry.",
   "bin": {
     "rakshak": "bin/rakshak.js"
@@ -12,6 +12,7 @@
   ],
   "scripts": {
     "test": "node bin/rakshak.js --help >/dev/null && node bin/rakshak.js list",
+    "postinstall": "node -e \"console.log('\\\\n  rakshak installed. Run \\\\u001b[36mrakshak doctor\\\\u001b[0m to verify setup, or \\\\u001b[36mrakshak init\\\\u001b[0m to configure.\\\\n')\"",
     "prepublishOnly": "npm test"
   },
   "keywords": [

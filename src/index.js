@@ -3,6 +3,8 @@
 const { program } = require("commander");
 const { TOOLS, byName } = require("./tools");
 const { buildArgv, runContainer, pullImage, resolveWorkdir } = require("./runner");
+const { doctor } = require("./doctor");
+const { init } = require("./init");
 const pkg = require("../package.json");
 
 function env(name, fallback) {
@@ -72,6 +74,22 @@ function buildProgram() {
     .option("--debug", "print the docker command that would be run");
 
   program
+    .command("doctor")
+    .description("verify docker, registry, auth, and image cache are configured correctly")
+    .action(async () => {
+      const code = await doctor();
+      process.exit(code);
+    });
+
+  program
+    .command("init")
+    .description("interactive first-run setup: writes ~/.npmrc + docker login for the Gitea registry")
+    .action(async () => {
+      const code = await init();
+      process.exit(code);
+    });
+
+  program
     .command("list")
     .description("list configured tools and image refs")
     .action(() => {
@@ -122,7 +140,18 @@ function buildProgram() {
     .argument("[args...]", "extra args forwarded to the tool; use -- to disambiguate")
     .allowUnknownOption(true)
     .action(async (tool, args) => {
-      if (!tool) return program.help();
+      if (!tool) {
+        // No args: show quickstart with a hint to doctor/init.
+        console.log(`rakshak v${pkg.version} — containerized security scanners\n`);
+        console.log("Quick start:");
+        console.log("  rakshak doctor       verify docker, registry, and auth");
+        console.log("  rakshak init         interactive first-run setup");
+        console.log("  rakshak list         show configured tools and image refs");
+        console.log("  rakshak <tool>       run a tool (semgrep, trivy, gitleaks, ...)");
+        console.log("  rakshak all          run every tool, JSON to stdout\n");
+        console.log("Docs: https://git.sable-chinstrap.ts.net/rakshak/cli");
+        return;
+      }
       if (!byName[tool]) {
         console.error(`unknown tool: ${tool}. try \`rakshak list\`.`);
         process.exit(2);
