@@ -1,0 +1,6 @@
+# Copy to ~/.npmrc OR to the project root as .npmrc.
+# The @rakshak scope routes to your self-hosted Gitea npm registry.
+@rakshak:registry=https://git.sable-chinstrap.ts.net/api/packages/rakshak/npm/
+
+//git.sable-chinstrap.ts.net/api/packages/rakshak/npm/:_authToken=${GITEA_TOKEN}
+always-auth=true

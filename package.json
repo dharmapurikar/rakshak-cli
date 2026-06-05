@@ -1,0 +1,38 @@
+{
+  "name": "@rakshak/cli",
+  "version": "0.1.0",
+  "description": "Containerized security & quality scanners you can summon from any project. Each tool is a pinned image pushed to your self-hosted Gitea registry.",
+  "bin": {
+    "rakshak": "bin/rakshak.js"
+  },
+  "main": "src/index.js",
+  "files": [
+    "bin",
+    "src"
+  ],
+  "scripts": {
+    "test": "node bin/rakshak.js --help >/dev/null && node bin/rakshak.js list",
+    "prepublishOnly": "npm test"
+  },
+  "keywords": [
+    "sast",
+    "sca",
+    "security",
+    "docker",
+    "semgrep",
+    "trivy",
+    "gitleaks",
+    "lint",
+    "scanner"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.1.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "registry": "https://git.sable-chinstrap.ts.net/api/packages/rakshak/npm/"
+  }
+}
