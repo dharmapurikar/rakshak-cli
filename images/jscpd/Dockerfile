@@ -2,13 +2,13 @@
 FROM node:20-alpine
 
 ARG TOOL_VERSION
-RUN npm install -g jscpd@${TOOL_VERSION} \
- && adduser -D -u 1000 scanner
+# node:alpine already ships a `node` user with uid 1000 — reuse it.
+RUN npm install -g jscpd@${TOOL_VERSION}
 
-COPY --chown=scanner:scanner entrypoint.sh /usr/local/bin/rakshak-jscpd.sh
+COPY --chown=node:node entrypoint.sh /usr/local/bin/rakshak-jscpd.sh
 RUN chmod +x /usr/local/bin/rakshak-jscpd.sh
 
-USER scanner
+USER node
 WORKDIR /workspace
 
 # Wrapper cats the JSON report to stdout so the wrapper gets machine-readable

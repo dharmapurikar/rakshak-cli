@@ -1,7 +1,8 @@
 # gitleaks - secrets in working tree + git history
-FROM zricethezav/gitleaks:$(TOOL_VERSION)
+ARG TOOL_VERSION
+FROM zricethezav/gitleaks:${TOOL_VERSION}
 
-USER gitleaks
+# Upstream image runs as root; gitleaks is read-only on /workspace so that's OK.
 WORKDIR /workspace
 
 ENTRYPOINT ["gitleaks"]

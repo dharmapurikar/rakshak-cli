@@ -75,7 +75,7 @@ function buildProgram() {
     .command("list")
     .description("list configured tools and image refs")
     .action(() => {
-      const registry = env("RAKSHAK_REGISTRY", "gitea.example.local/rakshak");
+      const registry = env("RAKSHAK_REGISTRY", "git.sable-chinstrap.ts.net/rakshak");
       const tag = env("RAKSHAK_TAG", "latest");
       console.log(`registry: ${registry}`);
       console.log(`tag:      ${tag}`);

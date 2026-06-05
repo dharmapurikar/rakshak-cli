@@ -1,7 +1,9 @@
 # osv-scanner - dependency vulns (Google OSV database)
-FROM gcr.io/osvizone/osv-scanner:$(TOOL_VERSION)
+# Published to GHCR (gcr.io mirror is auth-only).
+ARG TOOL_VERSION
+FROM ghcr.io/google/osv-scanner:${TOOL_VERSION}
 
-# The upstream image runs as root by default; drop to nobody.
+# Upstream image runs as root; drop to nobody.
 USER 65534
 WORKDIR /workspace
 

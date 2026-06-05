@@ -1,7 +1,8 @@
 # gosec - Go security checker
-FROM securego/gosec:$(TOOL_VERSION)
+ARG TOOL_VERSION
+FROM securego/gosec:${TOOL_VERSION}
 
-USER 1000
+# Upstream image runs as root; gosec is read-only on /workspace so that's OK.
 WORKDIR /workspace
 
 ENTRYPOINT ["gosec"]

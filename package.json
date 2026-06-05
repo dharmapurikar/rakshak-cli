@@ -1,6 +1,6 @@
 {
   "name": "@rakshak/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Containerized security & quality scanners you can summon from any project. Each tool is a pinned image pushed to your self-hosted Gitea registry.",
   "bin": {
     "rakshak": "bin/rakshak.js"
