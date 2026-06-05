@@ -99,19 +99,18 @@ If nothing is outdated, it exits 0 with no commit.
 
 ---
 
-## 4. Automated update — opencode skill
+## 4. Automated update — agentic skill
 
-For agentic runs (e.g. from an opencode CLI session, or any harness that
-loads opencode skills), see `.opencode/skills/update-images.md`.
-
-The skill wraps `scripts/update.sh` and adds:
+For agentic runs (any harness that loads a procedure doc — opencode,
+Continue, Aider, etc.), see `skills/update-images.md`. The skill wraps
+`scripts/update.sh` and adds:
 
 - Pre-flight checks (docker daemon up, Gitea reachable, working tree clean).
 - Pretty progress reporting.
 - Post-run verification (pull each updated image, smoke-run `rakshak list`).
 - Automatic rollback of the commit if any verification fails.
 
-Invoke with:
+Invoke with whatever your harness supports. For opencode:
 
 ```bash
 opencode run update-images
@@ -187,4 +186,4 @@ If you add a new tool to `images/<tool>/`:
 3. Add a `case` branch to `scripts/update.sh`.
 4. (Optional) add it to the matrix in `.gitea/workflows/update-images.yml`.
 
-The opencode skill picks up tools from the Makefile automatically.
+The agentic skill picks up tools from the Makefile automatically.

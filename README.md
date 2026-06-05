@@ -235,8 +235,8 @@ rakshak/
 ├── scripts/
 │   ├── latest-versions.sh        # query upstream registries for latest tags
 │   └── update.sh                 # bump + rebuild + push + commit
-├── .opencode/skills/
-│   └── update-images.md          # agentic update procedure
+├── skills/
+│   └── update-images.md          # agentic update procedure (tool-agnostic runbook)
 ├── .gitea/workflows/
 │   └── update-images.yml         # weekly CI bump
 ├── Makefile                      # build / push / release
