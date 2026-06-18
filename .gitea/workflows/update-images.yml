@@ -25,17 +25,9 @@ jobs:
           git config user.name  "rakshak-bot"
           git config user.email "rakshak-bot@users.noreply.git.sable-chinstrap.ts.net"
 
-      - name: Debug: test registry auth
-        run: |
-          echo "=== Testing registry with Basic auth ==="
-          AUTH=$(echo -n 'dharmapurikar:ceaca94e694f8590a855056a1de40395dc943c7e' | base64)
-          curl -s -o /dev/null -w "HTTP %{http_code}\n" -H "Authorization: Basic ${AUTH}" https://git.sable-chinstrap.ts.net/v2/
-          echo "=== Testing docker login ==="
-          echo "ceaca94e694f8590a855056a1de40395dc943c7e" | docker login git.sable-chinstrap.ts.net -u dharmapurikar --password-stdin 2>&1
-
       - name: Login to Gitea Container Registry
         run: |
-          echo "${{ secrets.GITEATOKEN }}" | docker login git.sable-chinstrap.ts.net -u "${{ secrets.GITEAUSER }}" --password-stdin
+          echo "${{ secrets.REGISTRY_TOKEN }}" | docker login git.sable-chinstrap.ts.net -u "${{ secrets.REGISTRY_USER }}" --password-stdin
 
       - name: Install jq
         run: sudo apt-get update -qq && sudo apt-get install -y -qq jq
