@@ -33,9 +33,9 @@ jobs:
 
       - name: Login to Gitea Container Registry
         run: |
-          echo "${{ secrets.GITEA_TOKEN }}" \
+          echo "${{ secrets.GITEATOKEN }}" \
             | docker login git.sable-chinstrap.ts.net \
-                -u "${{ secrets.GITEA_USER }}" \
+                -u "${{ secrets.GITEAUSER }}" \
                 --password-stdin
 
       - name: Install jq
