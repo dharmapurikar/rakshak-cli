@@ -172,4 +172,4 @@ function run() {
   });
 }
 
-module.exports = { run, buildProgram, runTool };
+module.exports = { run, buildProgram, runTool, imageFor, dockerBin, parseExtraArgs };

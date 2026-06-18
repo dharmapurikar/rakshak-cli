@@ -11,7 +11,8 @@
     "src"
   ],
   "scripts": {
-    "test": "node bin/rakshak.js --help >/dev/null && node bin/rakshak.js list",
+    "test": "node --test",
+    "test:smoke": "node bin/rakshak.js --help >/dev/null && node bin/rakshak.js list",
     "postinstall": "node -e \"console.log('\\\\n  rakshak installed. Run \\\\u001b[36mrakshak doctor\\\\u001b[0m to verify setup, or \\\\u001b[36mrakshak init\\\\u001b[0m to configure.\\\\n')\"",
     "prepublishOnly": "npm test"
   },
